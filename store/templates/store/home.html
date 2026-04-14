@@ -1,0 +1,49 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Shop - NovaTech{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Next-Gen <span style="color: var(--accent-glow);">Tech</span> Awaits.</h1>
+    <p>Discover the latest mobile devices, wearables, and premium electronics designed to elevate your everyday life.</p>
+</section>
+
+{% if categories %}
+<div class="categories">
+    <a href="{% url 'store:home' %}" class="cat-pill {% if not category %}active{% endif %}">All</a>
+    {% for cat in categories %}
+    <a href="{% url 'store:category_list' cat.pk %}" class="cat-pill {% if category and category.pk == cat.pk %}active{% endif %}">
+        {{ cat.name }}
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="section-title">
+    <h2>{% if category %}{{ category.name }}{% else %}Featured Products{% endif %}</h2>
+</div>
+
+<div class="grid">
+    {% for product in products %}
+    <a href="{% url 'store:product_detail' product.pk %}" class="card">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img">
+        {% else %}
+            <div class="card-img-placeholder">Tech</div>
+        {% endif %}
+        <div class="card-body">
+            <span class="card-category">{{ product.category.name }}</span>
+            <div class="card-title">{{ product.name }}</div>
+            <div class="card-footer">
+                <span class="price">₹{{ product.price }}</span>
+                <button class="btn btn-primary" onclick="event.preventDefault(); alert('Added to cart!');">
+                    Add +
+                </button>
+            </div>
+        </div>
+    </a>
+    {% empty %}
+    <p>No products found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

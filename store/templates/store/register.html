@@ -1,0 +1,293 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Register - NovaTech{% endblock %}
+
+{% block content %}
+<style>
+/* Neumorphism Override for Body */
+body {
+    background: #0f172a !important; /* Force darker background */
+    color: #f8fafc !important; /* Force light text */
+}
+
+/* Hide the main navbar styles temporarily if they clash, or adjust them */
+.navbar {
+    background: #0f172a !important;
+    border-bottom: none !important;
+    box-shadow: 5px 5px 15px #0a101d, -5px -5px 15px #141e37 !important;
+}
+.navbar .brand, .navbar .nav-link {
+    color: #f8fafc !important;
+    -webkit-text-fill-color: initial;
+    text-shadow: none;
+}
+
+/* Neumorphism Login Form */
+.login-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 4rem auto;
+}
+
+.login-card {
+    background: #0f172a;
+    border-radius: 30px;
+    padding: 50px 40px;
+    box-shadow: 
+        20px 20px 60px #0a101d,
+        -20px -20px 60px #141e37;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-5px);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.neu-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    background: #0f172a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        8px 8px 20px #0a101d,
+        -8px -8px 20px #141e37,
+        inset 0 0 0 #0a101d,
+        inset 0 0 0 #141e37;
+    transition: all 0.3s ease;
+}
+
+.neu-icon:hover {
+    box-shadow: 
+        4px 4px 10px #0a101d,
+        -4px -4px 10px #141e37,
+        inset 4px 4px 10px #0a101d,
+        inset -4px -4px 10px #141e37;
+}
+
+.icon-inner {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0ea5e9;
+}
+
+.icon-inner svg {
+    width: 100%;
+    height: 100%;
+}
+
+.login-header h2 {
+    color: #f8fafc;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    color: #94a3b8;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.neu-input {
+    position: relative;
+    background: #0f172a;
+    border-radius: 15px;
+    box-shadow: 
+        inset 8px 8px 16px #0a101d,
+        inset -8px -8px 16px #141e37;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+}
+
+.neu-input:focus-within {
+    box-shadow: 
+        inset 4px 4px 8px #0a101d,
+        inset -4px -4px 8px #141e37;
+}
+
+.neu-input input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 15px 24px;
+    color: #f8fafc;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.neu-input label {
+    display: block;
+    padding: 0 24px;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.neu-button {
+    width: 100%;
+    background: #0f172a;
+    border: none;
+    border-radius: 15px;
+    padding: 18px 32px;
+    color: #f8fafc;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 
+        8px 8px 20px #0a101d,
+        -8px -8px 20px #141e37;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.neu-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        12px 12px 30px #0a101d,
+        -12px -12px 30px #141e37;
+}
+
+.neu-button:active {
+    transform: translateY(0);
+    box-shadow: 
+        inset 4px 4px 10px #0a101d,
+        inset -4px -4px 10px #141e37;
+}
+
+.signup-link {
+    text-align: center;
+}
+
+.signup-link a {
+    color: #0ea5e9;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+    color: #f8fafc;
+}
+
+.error-message {
+    color: #ff3b5c;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 8px;
+    display: block;
+    text-align: center;
+}
+.helptext {
+    color: #94a3b8;
+    font-size: 12px;
+    padding: 0 10px;
+}
+.helptext,
+.error-message {
+    padding: 0 10px;
+}
+
+/* Technology items added */
+.tech-bg-item {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #0f172a;
+    box-shadow: inset 10px 10px 20px #0a101d, inset -10px -10px 20px #141e37;
+    z-index: -1;
+}
+
+.tech-item-1 {
+    top: -20px;
+    right: -20px;
+}
+
+.tech-item-2 {
+    bottom: -30px;
+    left: -20px;
+    width: 120px;
+    height: 120px;
+}
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="tech-bg-item tech-item-1"></div>
+        <div class="tech-bg-item tech-item-2"></div>
+
+        <div class="login-header">
+            <div class="neu-icon">
+                <div class="icon-inner">
+                    <!-- Circuit / User Tech icon -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="4"></circle>
+                        <path d="M4 22v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"></path>
+                        <circle cx="20" cy="5" r="1.5"></circle>
+                        <circle cx="4" cy="5" r="1.5"></circle>
+                        <line x1="20" y1="6.5" x2="20" y2="10"></line>
+                        <line x1="4" y1="6.5" x2="4" y2="10"></line>
+                        <line x1="16" y1="5" x2="18.5" y2="5"></line>
+                        <line x1="5.5" y1="5" x2="8" y2="5"></line>
+                    </svg>
+                </div>
+            </div>
+            <h2>NovaTech Network</h2>
+            <p>Register new technical access</p>
+        </div>
+
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            <span class="error-message">{{ form.non_field_errors }}</span>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <div class="neu-input">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <input type="{% if 'password' in field.name %}password{% else %}text{% endif %}"
+                        id="{{ field.id_for_label }}" name="{{ field.name }}" {% if field.field.required %}required{% endif %}>
+                </div>
+                {% for error in field.errors %}
+                <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="neu-button login-btn">
+                <span class="btn-text">Register Now</span>
+            </button>
+        </form>
+
+        <div class="signup-link">
+            <p>Already integrated? <a href="{% url 'store:login' %}">Sign in to Dashboard</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

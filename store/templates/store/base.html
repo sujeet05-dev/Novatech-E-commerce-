@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TechShop | Premium Electronics{% endblock %}</title>
+    <meta name="description" content="Premium E-commerce store for extreme tech enthusiasts.">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'store:home' %}" class="brand">NovaTech</a>
+        <div class="nav-links">
+            <a href="{% url 'store:home' %}" class="nav-link">Shop</a>
+            <a href="{% url 'store:contact' %}" class="nav-link">Contact</a>
+            {% if user.is_authenticated %}
+                <a href="#" class="nav-link">Hi, {{ user.username }}</a>
+                {% if user.is_staff %}
+                    <a href="/admin/" class="nav-link" style="color: var(--accent-glow);">Admin Dashboard</a>
+                {% endif %}
+                <a href="{% url 'store:logout' %}" class="nav-link">Logout</a>
+            {% else %}
+                <a href="{% url 'store:login' %}" class="nav-link">Login</a>
+                <a href="{% url 'store:register' %}" class="nav-link">Register</a>
+            {% endif %}
+            <a href="#" class="cart-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span>0</span>
+            </a>
+        </div>
+    </nav>
+
+    {% if messages %}
+    <div style="padding: 1rem 5%; background: var(--bg-card); text-align: center;">
+        {% for message in messages %}
+            <div style="color: var(--accent-glow); margin: 0.5rem 0;">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 NovaTech. Mobile & Electronics. All rights reserved.</p>
+    </footer>
+</body>
+</html>
